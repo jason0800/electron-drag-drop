@@ -6,7 +6,7 @@ const { log } = require('node:console')
 
 function createWindow () {
   const win = new BrowserWindow({
-    width: 800,
+    width: 1000,
     height: 600,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
@@ -14,14 +14,13 @@ function createWindow () {
   })
 
   win.loadFile('index.html')
+  win.webContents.openDevTools()
 }
 
 const iconPath = path.join(__dirname, 'banana.png')
 
-
 // Create a new file to copy - you can also copy existing files.
-fs.writeFileSync(path.join(__dirname, 'drag-and-drop-1.md'), '# First file to test drag and drop')
-fs.writeFileSync(path.join(__dirname, 'drag-and-drop-2.md'), '# Second file to test drag and drop')
+fs.writeFileSync(path.join(__dirname, 'drag-and-drop-1.md'), '# File to test drag and drop')
 
 const handleDrag = (event, fileName)  => {
 
