@@ -19,20 +19,27 @@ function createWindow () {
 
 const iconPath = path.join(__dirname, 'banana.png')
 
+const desktopPath = app.getPath("desktop");
+
 // Create a new file to copy - you can also copy existing files.
-fs.writeFileSync(path.join(__dirname, 'drag-and-drop-1.md'), '# File to test drag and drop')
+fs.writeFileSync(path.join(desktopPath, 'drag-and-drop-1.md'), '# File to test drag and drop')
 
 const handleDrag = (event, fileName)  => {
 
   event.sender.startDrag({
-    file: path.join(__dirname, fileName),
+    file: path.join(desktopPath, fileName),
     icon: iconPath
   })
 }
 
 app.whenReady().then(() => {
   createWindow()
+
   ipcMain.on('dragIt', handleDrag)
+
+  ipcMain.handle('get-app-path', () => {
+    return app.getAppPath()
+  })
 })
 
 
